@@ -9,11 +9,11 @@
         closeDialogVisible: false,
         rules: {
           username: [
-            { required: true, message: '用户名', trigger: 'blur' },
+            { required: true, message: '请输入用户名', trigger: 'blur' },
             { min: 3, message: '长度至少 3 个字符', trigger: 'blur' }
           ],
           password: [
-            { required: true, message: '密码', trigger: 'blur' },
+            { required: true, message: '请输入密码', trigger: 'blur' },
             { min: 3, message: '长度至少 3 个字符', trigger: 'blur' }
           ]
         }
