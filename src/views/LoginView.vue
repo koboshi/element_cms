@@ -30,25 +30,22 @@ export default {
         this.closeDialogVisible = false
         window.close()
       },
-      resetBtnHandle: function(formName) {
-        console.log(formName)
+      resetBtnHandler: function() {
         this.loginInfo.username = ''
         this.loginInfo.password = ''
       },
-      loginBtnHandle: function(formName) {
-        console.log(this.$refs[formName])
+      loginBtnHandler: function() {
         if (this.loginInfo.username.toLowerCase() === DEFAULT_ACCOUNT.username && this.loginInfo.password === DEFAULT_ACCOUNT.password) {
           //登录成功
-          this.$store.commit('login')
-          this.$router.push(SYSTEM_CONFIG.homeRoute)//跳转主页
+          this.$store.commit('login', {userName: this.loginInfo.username, userTicket: 'xxdadwa', userId: 1})
+          this.$router.push({name:SYSTEM_CONFIG.homeRoute})//跳转主页
           this.$message('已成功登录')
         }else {
+          //登陆失败
           this.$alert('用户名或密码错误')
           this.loginInfo.username = ''
           this.loginInfo.password = ''
         }
-
-        //登陆失败
       }
     }
   }
@@ -69,8 +66,8 @@ export default {
             <el-input placeholder="请输入密码" v-model="loginInfo.password" autocomplete="off" show-password></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button @click="loginBtnHandle('loginForm')" type="primary">登录</el-button>
-            <el-button @click="resetBtnHandle('loginForm')">重置</el-button>
+            <el-button @click="loginBtnHandler" type="primary">登录</el-button>
+            <el-button @click="resetBtnHandler">重置</el-button>
           </el-form-item>
         </el-form>
       </div>

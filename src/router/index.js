@@ -1,14 +1,13 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 import HomeView from "../views/HomeView.vue"
-import AboutView from "../views/AboutView.vue"
-import ContactUsView from "../views/ContactUsView.vue"
+import AboutView from "../views/common/AboutView.vue"
+import ContactUsView from "../views/common/ContactUsView.vue"
 import MsgCenterView from "../views/MsgCenterView.vue"
 import LoginView from "../views/LoginView.vue"
 import DefaultView from "../views/layout/DefaultView.vue"
-import {SYSTEM_CONFIG} from "../config"
-import stroe from "../store"
-import store from "../store";
+import {SYSTEM_CONFIG} from "~/config"
+import store from "~/store";
 
 
 Vue.use(VueRouter);

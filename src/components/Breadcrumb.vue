@@ -6,8 +6,15 @@ export default {
     }
   },
   computed: {
-    crumbs: function() {
-      return this.$route.matched
+    midCrumbs: function() {
+      console.log('crumb info')
+      console.log(this.$route.matched)
+      return this.$route.matched.slice(0, -1)
+    },
+    lastCrumb: function() {
+      console.log('lastCrumb info')
+      console.log(this.$route.matched[this.$route.matched.length - 1])
+      return this.$route.matched[this.$route.matched.length - 1]
     }
   },
   methods: {
@@ -19,10 +26,11 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="breadcrumb-box">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item v-for="(crumb, index) in crumbs" :key="index">{{ crumb.meta.name }}</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{name:'home'}">首页</el-breadcrumb-item>
+      <el-breadcrumb-item v-for="(crumb, index) in midCrumbs" :to="crumb.name" :key="index">{{ crumb.meta.name }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ lastCrumb.meta.name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
 <!--    <el-button @click="testBtnHanle">测试</el-button>-->
@@ -30,5 +38,10 @@ export default {
 </template>
 
 <style scoped>
-
+.breadcrumb-box {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #d7dae2;
+  border-radius: 4px;
+}
 </style>

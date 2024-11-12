@@ -5,15 +5,16 @@ export default {
   data: function () {
     return {
       logoutVisible: false,
-      loginInfo: {
-        userId: 1,
-        userName:'koboshi'
-      }
     }
   },
   computed: {
     menuActiveIndex: function () {
       return this.$route.name
+    },
+    loginInfo: function () {
+      console.log('loginInfo')
+      console.log(this.$store.state.loginInfo)
+      return this.$store.state.loginInfo
     }
   },
   methods: {
