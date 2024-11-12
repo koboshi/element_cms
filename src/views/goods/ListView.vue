@@ -54,7 +54,79 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      goodsData: [
+        {
+          id: 1,
+          name: 'vivo x200',
+          status_name: '已上架',
+          price: '5299',
+          region_name: '广州市/天河区',
+          publish_time: '2024-10-20 11:00:05',
+          add_time: '2024-10-01 06:45:47',
+          edit_time: '2024-10-19 23:01:58',
+          editor: '老丁头'
+        }, {
+          id: 2,
+          name: 'vivo x100',
+          status_name: '已下架',
+          price: '5299',
+          region_name: '广州市/天河区',
+          publish_time: '2024-10-20 11:00:05',
+          add_time: '2024-10-01 06:45:47',
+          edit_time: '2024-10-19 23:01:58',
+          editor: '老丁头'
+        }, {
+          id: 3,
+          name: 'oppo find x7',
+          status_name: '已删除',
+          price: '5299',
+          region_name: '广州市/天河区',
+          publish_time: '2024-10-20 11:00:05',
+          add_time: '2024-10-01 06:45:47',
+          edit_time: '2024-10-19 23:01:58',
+          editor: '老丁头'
+        }, {
+          id: 4,
+          name: 'oppo find x8',
+          status_name: '已上架',
+          price: '5299',
+          region_name: '广州市/天河区',
+          publish_time: '2024-10-20 11:00:05',
+          add_time: '2024-10-01 06:45:47',
+          edit_time: '2024-10-19 23:01:58',
+          editor: '老丁头'
+        }, {
+          id: 5,
+          name: 'xiaomi 15',
+          status_name: '已上架',
+          price: '5299',
+          region_name: '广州市/天河区',
+          publish_time: '2024-10-20 11:00:05',
+          add_time: '2024-10-01 06:45:47',
+          edit_time: '2024-10-19 23:01:58',
+          editor: '老丁头'
+        }, {
+          id: 6,
+          name: 'xiaomi 14',
+          status_name: '已上架',
+          price: '5299',
+          region_name: '广州市/天河区',
+          publish_time: '2024-10-20 11:00:05',
+          add_time: '2024-10-01 06:45:47',
+          edit_time: '2024-10-19 23:01:58',
+          editor: '老丁头'
+        }, {
+          id: 7,
+          name: 'redmi k80',
+          status_name: '待上架',
+          price: '5299',
+          region_name: '广州市/天河区',
+          publish_time: '2024-10-20 11:00:05',
+          add_time: '2024-10-01 06:45:47',
+          edit_time: '2024-10-19 23:01:58',
+          editor: '老丁头'
+        }],
     }
   },
   methods: {
@@ -75,6 +147,17 @@ export default {
     curPageChangeHandler(val) {
       console.log('current page change')
       console.log(val)
+    },
+    editBtnHandler(id) {
+      console.log('edit goods')
+      console.log(id)
+    },
+    delBtnHandler(id) {
+      console.log('delete goods')
+      console.log(id)
+    },
+    addBtnHandler() {
+      console.log('add goods')
     }
   }
 }
@@ -86,7 +169,7 @@ export default {
       <el-col>
         <!--搜索框begin-->
         <div class="search-box">
-          <el-form class="search-form" label-position="left" :model="searchInfo" @submit.native.prevent>
+          <el-form size="medium" class="search-form" label-position="left" :model="searchInfo" @submit.native.prevent>
             <el-row>
               <el-col :span="8">
                 <el-form-item label="商品名" prop="goods_name">
@@ -130,7 +213,7 @@ export default {
             <el-row>
               <el-col :span="8">
                 <el-form-item >
-                  <el-button @click="searchBtnHandler" type="primary">登录</el-button>
+                  <el-button @click="searchBtnHandler" type="primary">搜索</el-button>
                   <el-button @click="resetBtnHandler">重置</el-button>
                 </el-form-item>
               </el-col>
@@ -141,8 +224,40 @@ export default {
       </el-col>
     </el-row>
     <el-row>
+      <el-col :span="2" :offset="22">
+        <el-button size="medium" icon="el-icon-plus" type="success" @click="addBtnHandler">新建商品</el-button>
+      </el-col>
+    </el-row>
+    <el-row>
       <el-col>
         <!--数据表格begin-->
+        <div class="data-box">
+          <el-table border stripe :data="goodsData">
+            <el-table-column prop="id" label="商品ID"></el-table-column>
+            <el-table-column prop="name" label="商品名"></el-table-column>
+            <el-table-column label="价格">
+              <template slot-scope="scope">
+                <span>￥</span>
+                <span>{{scope.row.price}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="status_name" label="上架状态"></el-table-column>
+            <el-table-column prop="region_name" label="上架区域"></el-table-column>
+            <el-table-column prop="publish_time" label="上架时间"></el-table-column>
+            <el-table-column prop="add_time" label="创建时间"></el-table-column>
+            <el-table-column prop="edit_time" label="编辑时间"></el-table-column>
+            <el-table-column prop="editor" label="最近编辑人"></el-table-column>
+            <el-table-column label="操作">
+  <!--            <template slot="header" slot-scope="scope">-->
+  <!--              <el-button @click="addBtnHandler" type="primary" icon="el-icon-plus" circle></el-button>-->
+  <!--            </template>-->
+              <template slot-scope="scope">
+                <el-button @click="editBtnHandler(scope.row.id)" icon="el-icon-edit" circle></el-button>
+                <el-button @click="delBtnHandler(scope.row.id)" type="danger" icon="el-icon-delete" circle></el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
         <!--数据表格end-->
       </el-col>
     </el-row>
@@ -162,5 +277,8 @@ export default {
 <style scoped>
 .keyword-input {
   width: 300px;
+}
+.data-box {
+  margin-top: 20px;
 }
 </style>
