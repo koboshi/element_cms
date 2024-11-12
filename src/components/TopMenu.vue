@@ -1,4 +1,6 @@
 <script>
+import {SYSTEM_CONFIG} from "~/config"
+
 export default {
   data: function () {
     return {
@@ -25,9 +27,12 @@ export default {
       console.log('logout dialog call')
       this.logoutVisible = true
     },
-    logoutConfirm(e) {
+    logoutConfirmHandle(e) {
       console.log('logout...')
       this.logoutVisible = false
+      this.$store.commit('logout')
+      this.$router.push(SYSTEM_CONFIG.loginRoute)
+      this.$message('已成功登出')
     }
   }
 }
@@ -57,7 +62,7 @@ export default {
       <span>是否确认登出？</span>
       <span slot="footer">
         <el-button @click="logoutVisible = false">取 消</el-button>
-        <el-button type="warning" @click="logoutConfirm">确 定</el-button>
+        <el-button type="warning" @click="logoutConfirmHandle">确 定</el-button>
       </span>
     </el-dialog>
     <!--登出确认面板begin-->

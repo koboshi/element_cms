@@ -1,5 +1,7 @@
 <script>
-  export default {
+import {DEFAULT_ACCOUNT, SYSTEM_CONFIG} from "~/config"
+
+export default {
     data: function() {
       return {
         loginInfo: {
@@ -35,6 +37,18 @@
       },
       loginBtnHandle: function(formName) {
         console.log(this.$refs[formName])
+        if (this.loginInfo.username.toLowerCase() === DEFAULT_ACCOUNT.username && this.loginInfo.password === DEFAULT_ACCOUNT.password) {
+          //登录成功
+          this.$store.commit('login')
+          this.$router.push(SYSTEM_CONFIG.homeRoute)//跳转主页
+          this.$message('已成功登录')
+        }else {
+          this.$alert('用户名或密码错误')
+          this.loginInfo.username = ''
+          this.loginInfo.password = ''
+        }
+
+        //登陆失败
       }
     }
   }

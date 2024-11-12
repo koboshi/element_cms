@@ -6,30 +6,14 @@ import ContactUsView from "../views/ContactUsView.vue"
 import MsgCenterView from "../views/MsgCenterView.vue"
 import LoginView from "../views/LoginView.vue"
 import DefaultView from "../views/layout/DefaultView.vue"
+import {SYSTEM_CONFIG} from "../config"
+import stroe from "../store"
+import store from "../store";
 
-const AdminIndexView = () => import(/* webpackChunkName: "view-admin" */ '../views/admin/IndexView.vue')
-const AdminInfoView = () => import(/* webpackChunkName: "view-admin" */ '../views/admin/InfoView.vue')
-const AdminChangePswView = () => import(/* webpackChunkName: "view-admin" */ '../views/admin/ChangePswView.vue')
-
-//商品相关视图懒加载
-const GoodsIndexView = () => import(/* webpackChunkName: "view-goods" */ '../views/goods/IndexView.vue')
-const GoodsListView = () => import(/* webpackChunkName: "view-goods" */ '../views/goods/ListView.vue')
-
-//订单相关视图懒加载
-const OrderIndexView = () => import(/* webpackChunkName: "view-order" */ '../views/order/IndexView.vue')
-const OrderRevenueView = () => import(/* webpackChunkName: "view-order" */ '../views/order/RevenueView.vue')
-const OrderReportView = () => import(/* webpackChunkName: "view-order" */ '../views/order/ReportView.vue')
-const OrderListView = () => import(/* webpackChunkName: "view-order" */ '../views/order/ListView.vue')
-
-//用户相关视图懒加载
-const UserIndexView = () => import(/* webpackChunkName: "view-user" */ '../views/user/IndexView.vue')
-const UserListView = () => import(/* webpackChunkName: "view-user" */ '../views/user/ListView.vue')
-const UserDauView = () => import(/* webpackChunkName: "view-user" */ '../views/user/DauView.vue')
-const UserMauView = () => import(/* webpackChunkName: "view-user" */ '../views/user/MauView.vue')
-const UserArpuView = () => import(/* webpackChunkName: "view-user" */ '../views/user/ArpuView.vue')
 
 Vue.use(VueRouter);
 
+//路由设定
 const routes = [
     {
         path: '/',
@@ -70,12 +54,12 @@ const routes = [
             path: 'info',
             name: 'admin_info',
             meta: {name:'个人信息'},
-            component:AdminInfoView
+            component:() => import(/* webpackChunkName: "view-admin" */ '../views/admin/InfoView.vue')
         },{
             path: 'change-psw',
             name: 'admin_change_psw',
             meta: {name:'修改密码'},
-            component:AdminChangePswView
+            component:() => import(/* webpackChunkName: "view-admin" */ '../views/admin/ChangePswView.vue')
         }]
     },
     {
@@ -87,7 +71,7 @@ const routes = [
             path: 'list',
             name: 'goods_list',
             meta: {name:'商品管理'},
-            component:GoodsListView
+            component:() => import(/* webpackChunkName: "view-goods" */ '../views/goods/ListView.vue')
         }]
     },
     {
@@ -99,17 +83,17 @@ const routes = [
             path: 'order-report',
             name: 'order_report',
             meta: {name:'订单列表'},
-            component:OrderReportView
+            component:() => import(/* webpackChunkName: "view-order" */ '../views/order/ReportView.vue')
         },{
             path: 'revenue-report',
             name: 'revenue_report',
             meta: {name:'营收报表'},
-            component:OrderRevenueView
+            component:() => import(/* webpackChunkName: "view-order" */ '../views/order/RevenueView.vue')
         },{
             path: 'list',
             name: 'order_list',
             meta: {name:'订单管理'},
-            component:OrderListView
+            component:() => import(/* webpackChunkName: "view-order" */ '../views/order/ListView.vue')
         }]
     },
     {
@@ -121,22 +105,22 @@ const routes = [
             path: 'list',
             name: 'user_list',
             meta: {name:'用户管理'},
-            component:UserListView
+            component:() => import(/* webpackChunkName: "view-user" */ '../views/user/ListView.vue')
         },{
             path: 'mau-report',
             name: 'mau_report',
             meta: {name:'MAU报表'},
-            component:UserMauView
+            component:() => import(/* webpackChunkName: "view-user" */ '../views/user/MauView.vue')
         },{
             path: 'dau-report',
             name: 'dau_report',
             meta: {name:'DAU报表'},
-            component:UserDauView
+            component:() => import(/* webpackChunkName: "view-user" */ '../views/user/DauView.vue')
         },{
             path: 'arpu-report',
             name: 'arpu_report',
             meta: {name:'ARPU报表'},
-            component:UserArpuView
+            component:() => import(/* webpackChunkName: "view-user" */ '../views/user/ArpuView.vue')
         }]
     }
 ]
@@ -144,6 +128,24 @@ const routes = [
 const router = new VueRouter({
     mode: 'hash',
     routes: routes
+})
+
+//导航守卫设定
+router.beforeEach(function(to, from, next) {
+    let isAuthenticated = store.state.isAuthenticated
+    if (SYSTEM_CONFIG.noAuthRoute.includes(to.name)) {
+        //若目标位置是免认证，则无条件允许
+        next()
+    }else if (to.name !== SYSTEM_CONFIG.loginRoute && !isAuthenticated) {
+        //若当前位置不属于免认证，未登录不允许去login以外的地方
+        next({name: SYSTEM_CONFIG.loginRoute})
+    }else if (to.name === SYSTEM_CONFIG.loginRoute && isAuthenticated) {
+        //登陆后不允许再去login，强行跳转首页
+        next({name: 'home'})
+    }else {
+        //目标位置不是免认证，当前已登录 or 未登录但不访问login
+        next()
+    }
 })
 
 export default router;
