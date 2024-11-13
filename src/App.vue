@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <layout v-if="isAuthenticated"></layout>
+    <main-view v-if="isAuthenticated"></main-view>
     <router-view v-else></router-view>
   </div>
 </template>
 
 <script>
-import Layout from "./components/Layout.vue"
+import MainView from "./views/layout/MainView.vue"
 export default {
-  components: {Layout},
+  components: {MainView},
   data: function () {
     return {
       //isAuthenticated: this.$store.state.isAuthenticated,

@@ -5,7 +5,7 @@ import AboutView from "../views/common/AboutView.vue"
 import ContactUsView from "../views/common/ContactUsView.vue"
 import MsgCenterView from "../views/MsgCenterView.vue"
 import LoginView from "../views/LoginView.vue"
-import DefaultView from "../views/layout/DefaultView.vue"
+import DefaultView from "../views/layout/TransparentView.vue"
 import {SYSTEM_CONFIG} from "~/config"
 import store from "~/store";
 

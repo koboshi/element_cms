@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <el-container>
       <el-header>
         <!--头部导航begin-->
@@ -7,7 +7,7 @@
         <!--头部导航end-->
       </el-header>
       <el-container>
-        <el-aside width="300px">
+        <el-aside width="15%">
           <!--左侧菜单begin-->
           <left-menu></left-menu>
           <!--左侧菜单end-->
@@ -39,15 +39,15 @@
 </template>
 
 <script>
-import TopMenu from "../../components/TopMenu.vue";
-import LeftMenu from "../../components/LeftMenu.vue";
-import Breadcrumb from "../../components/Breadcrumb.vue";
-import Footer from "../../components/Footer.vue";
+import TopMenu from "./components/TopMenu.vue";
+import LeftMenu from "./components/LeftMenu.vue";
+import Breadcrumb from "./components/Breadcrumb.vue";
+import Footer from "./components/Footer.vue";
 export default {
   components: {Footer, Breadcrumb, LeftMenu, TopMenu},
   data: function () {
     return {
-      test: 'hello world',
+
     }
   }
 }

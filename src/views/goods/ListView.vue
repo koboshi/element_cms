@@ -1,6 +1,6 @@
 <script>
 import ListPager from "~/components/ListPager.vue";
-import GoodsDetailFormDialog from "./dialog/GoodsDetailFormDialog.vue";
+import GoodsDetailFormDialog from "./components/GoodsDetailFormDialog.vue";
 export default {
   components: {ListPager, GoodsDetailFormDialog},
   data: function() {

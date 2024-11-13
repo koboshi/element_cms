@@ -22,6 +22,7 @@ export default {
 
 <template>
   <div>
+    <el-divider></el-divider>
 <!--    <el-link :to="{name: 'about'}" type="info">关于</el-link>-->
     <el-link @click.prevent="aboutClickHandle" type="info">关于</el-link>
     <el-link @click.prevent="contactClickHandle" type="info">联系我们</el-link>
