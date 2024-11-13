@@ -2,6 +2,18 @@
 export default {
   name: "GoodsDetailFormDialog",
   data: function () {
+    let checkPrice = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('价格不能为空'));
+      }
+      if (!Number.isInteger(value)) {
+        return callback(new Error('价格必须为数值'));
+      }
+      if(value <= 0) {
+        return callback(new Error('价格必须大于0'));
+      }
+    }
+
     return {
       goodsInfo: {
         id: '0',
@@ -10,24 +22,14 @@ export default {
         price: '',
         region: '',
       },
-      checkPrice(rule, value, callback) {
-        if (!value) {
-          return callback(new Error('价格不能为空'));
-        }
-        if (!Number.isInteger(value)) {
-          return callback(new Error('价格必须为数值'));
-        }
-        if(value <= 0) {
-          return callback(new Error('价格必须大于0'));
-        }
-      },
       rules: {
         name: [
           { required: true, message: '请输入商品名', trigger: 'blur' },
           { min: 2, message: '长度至少 2 个字符', trigger: 'blur' }
         ],
         price: [
-          { validator: this.checkPrice, trigger: 'blur' },
+          { required: true, message: '请输入价格', trigger: 'blur' },
+          { validator: checkPrice, trigger: 'blur' },
         ],
         status: [
           { required: true, message: '请选择状态', trigger: 'blur' },
@@ -119,7 +121,7 @@ export default {
           id: this.goodsId.toString(),
           name: 'redmi k80',
           status: '0',
-          price: '5299',
+          price: 5299,
           region: '3',
         }
       }else {
@@ -132,17 +134,21 @@ export default {
         }
       }
     },
-    confirmBtnHandler: function (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          //TODO 一系列持久化操作
-          console.log('detail form submit ok')
-          this.callback(true, this.action,this.goodsId,this.goodsInfo)
-        }else {
-          console.log('detail form submit error')
-          return false
-        }
-      })
+    confirmBtnHandler: function () {
+      //执行一系列持久化操作...
+      console.log('confirm trigger')
+      this.callback(true, this.action,this.goodsId,this.goodsInfo)
+      // this.$refs['detailForm'].validate((valid) => {
+      //   console.log('validate trigger')
+      //   if (valid) {
+      //     console.log('detail form submit ok')
+      //     this.callback(true, this.action, this.goodsId, this.goodsInfo)
+      //     return true
+      //   }else {
+      //     console.log('detail form submit error')
+      //     return false
+      //   }
+      // })
     },
     openHandler: function () {
       //对话框打开，重新加载数据
@@ -157,7 +163,7 @@ export default {
 
 <template>
   <!--商品详情表格（新增|修改）对话框begin-->
-  <el-dialog :title="dialogTitle" :visible.sync="visible" :append-to-body="true" @close="closeHandler" @open="openHandler">
+  <el-dialog :title="dialogTitle" :destroy-on-close="true" :visible.sync="visible" :append-to-body="true" :close-on-click-modal="false" @close="closeHandler" @open="openHandler">
     <el-form size="medium" class="detail-form" label-position="left" ref="detailForm" :rules="rules" :model="goodsInfo" @submit.native.prevent>
       <el-form-item label="商品名" prop="name">
         <el-input v-model="goodsInfo.name" clearable></el-input>
@@ -165,9 +171,10 @@ export default {
       <el-form-item label="价格" prop="price">
         <el-input v-model.number="goodsInfo.price"></el-input>
       </el-form-item>
-      <el-form-item label="上架区域" prop="region" placeholder="请选择区域">
+      <el-form-item label="上架区域" prop="region">
         <el-cascader
             v-model="goodsInfo.region"
+            placeholder="请选择区域"
             :options="regionOptions"
             :props="{ expandTrigger: 'hover' }"></el-cascader>
       </el-form-item>
@@ -181,7 +188,7 @@ export default {
         </el-select>
       </el-form-item>
       <el-form-item >
-        <el-button @click="confirmBtnHandler('detailForm')" type="primary">{{ btnTitle }}</el-button>
+        <el-button @click="confirmBtnHandler" type="primary">{{ btnTitle }}</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>

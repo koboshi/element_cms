@@ -5,6 +5,7 @@ export default {
   components: {ListPager, GoodsDetailFormDialog},
   data: function() {
     return {
+      editGoodsId: 0,
       editDialogVisible: false,
       addDialogVisible: false,
       curPage: 1,
@@ -164,6 +165,7 @@ export default {
     editBtnHandler(id) {
       console.log('edit goods')
       console.log(id)
+      this.editGoodsId = id
       this.editDialogVisible = true
     },
     delBtnHandler(id) {
@@ -243,12 +245,15 @@ export default {
       <el-col :span="2" :offset="22">
         <!--创建按钮begin-->
         <el-button size="medium" icon="el-icon-plus" type="success" @click="addBtnHandler">新建商品</el-button>
-        <goods-detail-form-dialog :goods-id="0" action="add" :visible.sync="addDialogVisible" :callback="addDialogCallback"></goods-detail-form-dialog>
         <!--创建按钮end-->
       </el-col>
     </el-row>
     <el-row>
       <el-col>
+        <!--数据编辑弹框begin-->
+        <goods-detail-form-dialog :goods-id="0" action="add" :visible.sync="addDialogVisible" :callback="addDialogCallback"></goods-detail-form-dialog>
+        <goods-detail-form-dialog :goods-id="editGoodsId" action="edit" :visible.sync="editDialogVisible" :callback="editDialogCallback"></goods-detail-form-dialog>
+        <!--数据编辑弹框end-->
         <!--数据表格begin-->
         <div class="data-box">
           <el-table border stripe :data="goodsData">
@@ -270,7 +275,7 @@ export default {
               <template slot-scope="scope">
                 <!--编辑按钮begin-->
                 <el-button @click="editBtnHandler(scope.row.id)" icon="el-icon-edit" circle></el-button>
-                <goods-detail-form-dialog :goods-id="scope.row.id" action="edit" :visible.sync="editDialogVisible" :callback="editDialogCallback"></goods-detail-form-dialog>
+<!--                <goods-detail-form-dialog :goods-id="scope.row.id" action="edit" :visible.sync="editDialogVisible" :callback="editDialogCallback"></goods-detail-form-dialog>-->
                 <!--编辑按钮end-->
                 <el-divider direction="vertical"></el-divider>
                 <!--删除按钮begin-->
