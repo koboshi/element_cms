@@ -5,6 +5,7 @@ export default {
   components: {ListPager, GoodsDetailFormDialog},
   data: function() {
     return {
+      tableDataLoading: false,
       editGoodsId: 0,
       editDialogVisible: false,
       addDialogVisible: false,
@@ -149,8 +150,10 @@ export default {
       console.log(val)
     },
     searchBtnHandler() {
+      this.tableDataLoading = true
       console.log('begin search')
       console.log(this.searchInfo)
+      this.tableDataLoading = false
     },
     resetBtnHandler() {
       this.searchInfo.goods_name = ''
@@ -256,7 +259,7 @@ export default {
         <!--数据编辑弹框end-->
         <!--数据表格begin-->
         <div class="data-box">
-          <el-table border stripe :data="goodsData">
+          <el-table v-loading="tableDataLoading" border stripe :data="goodsData">
             <el-table-column prop="id" label="商品ID"></el-table-column>
             <el-table-column prop="name" label="商品名"></el-table-column>
             <el-table-column label="价格">

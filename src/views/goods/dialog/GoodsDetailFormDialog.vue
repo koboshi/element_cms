@@ -15,6 +15,7 @@ export default {
     }
 
     return {
+      formDataLoading: false,
       goodsInfo: {
         id: '0',
         name: '',
@@ -151,8 +152,11 @@ export default {
       // })
     },
     openHandler: function () {
+      this.formDataLoading = true
       //对话框打开，重新加载数据
       this.refreshGoodsInfo()
+
+      this.formDataLoading= false
     },
     closeHandler: function () {
       this.$emit('update:visible', false)
@@ -164,7 +168,7 @@ export default {
 <template>
   <!--商品详情表格（新增|修改）对话框begin-->
   <el-dialog :title="dialogTitle" :destroy-on-close="true" :visible.sync="visible" :append-to-body="true" :close-on-click-modal="false" @close="closeHandler" @open="openHandler">
-    <el-form size="medium" class="detail-form" label-position="left" ref="detailForm" :rules="rules" :model="goodsInfo" @submit.native.prevent>
+    <el-form v-loading="formDataLoading" size="medium" class="detail-form" label-position="left" ref="detailForm" :rules="rules" :model="goodsInfo" @submit.native.prevent>
       <el-form-item label="商品名" prop="name">
         <el-input v-model="goodsInfo.name" clearable></el-input>
       </el-form-item>
