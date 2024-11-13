@@ -32,16 +32,16 @@ export default {
       <el-breadcrumb-item v-for="(crumb, index) in midCrumbs" :to="crumb.name" :key="index">{{ crumb.meta.name }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ lastCrumb.meta.name }}</el-breadcrumb-item>
     </el-breadcrumb>
-
+    <el-divider></el-divider>
 <!--    <el-button @click="testBtnHanle">测试</el-button>-->
   </div>
 </template>
 
 <style scoped>
 .breadcrumb-box {
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #d7dae2;
-  border-radius: 4px;
+  //margin-bottom: 20px;
+  //padding-bottom: 20px;
+  //border-bottom: 1px solid #d7dae2;
+  //border-radius: 4px;
 }
 </style>

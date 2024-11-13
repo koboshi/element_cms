@@ -17,11 +17,13 @@ export default {
 
 <template>
   <!--分页begin-->
-  <el-pagination
-      :current-page="curPage"
-      :page-size="pageSize"
-      :total="totalCount" layout="total, prev, pager, next, jumper"
-      @current-change="$emit('current-change', $event)"></el-pagination>
+  <div>
+    <el-pagination
+        :current-page="curPage"
+        :page-size="pageSize"
+        :total="totalCount" layout="total, prev, pager, next, jumper"
+        @current-change="$emit('current-change', $event)"></el-pagination>
+  </div>
   <!--分页end-->
 </template>
 

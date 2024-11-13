@@ -1,9 +1,12 @@
 <script>
 import ListPager from "~/components/ListPager.vue";
+import GoodsDetailFormDialog from "./dialog/GoodsDetailFormDialog.vue";
 export default {
-  components: {ListPager},
+  components: {ListPager, GoodsDetailFormDialog},
   data: function() {
     return {
+      editDialogVisible: false,
+      addDialogVisible: false,
       curPage: 1,
       pageSize: 20,
       totalCount: 786,
@@ -130,6 +133,16 @@ export default {
     }
   },
   methods: {
+    addDialogCallback(status, action, goodsId, goodsInfo) {
+      this.addDialogVisible = false
+      console.log('add dialog callback')
+      console.log(action, goodsId, goodsInfo)
+    },
+    editDialogCallback(status, action, goodsId, goodsInfo) {
+      this.editDialogVisible = false
+      console.log('edit dialog callback')
+      console.log(action, goodsId, goodsInfo)
+    },
     regionChangeHandler(val) {
       console.log('region change')
       console.log(val)
@@ -151,6 +164,7 @@ export default {
     editBtnHandler(id) {
       console.log('edit goods')
       console.log(id)
+      this.editDialogVisible = true
     },
     delBtnHandler(id) {
       console.log('delete goods')
@@ -158,6 +172,7 @@ export default {
     },
     addBtnHandler() {
       console.log('add goods')
+      this.addDialogVisible = true
     }
   }
 }
@@ -219,13 +234,17 @@ export default {
               </el-col>
             </el-row>
           </el-form>
+          <el-divider></el-divider>
         </div>
         <!--数据表格end-->
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2" :offset="22">
+        <!--创建按钮begin-->
         <el-button size="medium" icon="el-icon-plus" type="success" @click="addBtnHandler">新建商品</el-button>
+        <goods-detail-form-dialog :goods-id="0" action="add" :visible.sync="addDialogVisible" :callback="addDialogCallback"></goods-detail-form-dialog>
+        <!--创建按钮end-->
       </el-col>
     </el-row>
     <el-row>
@@ -248,12 +267,17 @@ export default {
             <el-table-column prop="edit_time" label="编辑时间"></el-table-column>
             <el-table-column prop="editor" label="最近编辑人"></el-table-column>
             <el-table-column label="操作">
-  <!--            <template slot="header" slot-scope="scope">-->
-  <!--              <el-button @click="addBtnHandler" type="primary" icon="el-icon-plus" circle></el-button>-->
-  <!--            </template>-->
               <template slot-scope="scope">
+                <!--编辑按钮begin-->
                 <el-button @click="editBtnHandler(scope.row.id)" icon="el-icon-edit" circle></el-button>
-                <el-button @click="delBtnHandler(scope.row.id)" type="danger" icon="el-icon-delete" circle></el-button>
+                <goods-detail-form-dialog :goods-id="scope.row.id" action="edit" :visible.sync="editDialogVisible" :callback="editDialogCallback"></goods-detail-form-dialog>
+                <!--编辑按钮end-->
+                <el-divider direction="vertical"></el-divider>
+                <!--删除按钮begin-->
+                <el-popconfirm @confirm="delBtnHandler(scope.row.id)" :title="'确认删除ID=' + scope.row.id + '的商品 ' + scope.row.name + ' 吗?'">
+                  <el-button slot="reference" type="danger" icon="el-icon-delete" circle></el-button>
+                </el-popconfirm>
+                <!--删除按钮end-->
               </template>
             </el-table-column>
           </el-table>
@@ -271,6 +295,10 @@ export default {
         <!--分页end-->
       </el-col>
     </el-row>
+
+    <!--dialog begin-->
+<!--    <goods-detail-form-dialog></goods-detail-form-dialog>-->
+    <!--dialog end -->
   </div>
 </template>
 
