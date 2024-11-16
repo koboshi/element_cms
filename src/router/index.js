@@ -7,7 +7,7 @@ import MsgCenterView from "../views/MsgCenterView.vue"
 import LoginView from "../views/LoginView.vue"
 import DefaultView from "../views/layout/TransparentView.vue"
 import {SYSTEM_CONFIG} from "~/config"
-import store from "~/store";
+import Helper from '~/utils/helper'
 
 
 Vue.use(VueRouter);
@@ -131,16 +131,17 @@ const router = new VueRouter({
 
 //导航守卫设定
 router.beforeEach(function(to, from, next) {
-    let isAuthenticated = store.state.isAuthenticated
-    if (SYSTEM_CONFIG.noAuthRoute.includes(to.name)) {
+    let flag = Helper.isLogin()
+    console.log(flag)
+    if (SYSTEM_CONFIG.NO_AUTH_ROUTE.includes(to.name)) {
         //若目标位置是免认证，则无条件允许
         next()
-    }else if (to.name !== SYSTEM_CONFIG.loginRoute && !isAuthenticated) {
+    }else if (to.name !== SYSTEM_CONFIG.LOGIN_ROUTE && !flag) {
         //若当前位置不属于免认证，未登录不允许去login以外的地方
-        next({name: SYSTEM_CONFIG.loginRoute})
-    }else if (to.name === SYSTEM_CONFIG.loginRoute && isAuthenticated) {
+        next({name: SYSTEM_CONFIG.LOGIN_ROUTE})
+    }else if (to.name === SYSTEM_CONFIG.LOGIN_ROUTE && flag) {
         //登陆后不允许再去login，强行跳转首页
-        next({name: 'home'})
+        next({name: SYSTEM_CONFIG.HOME_ROUTE})
     }else {
         //目标位置不是免认证，当前已登录 or 未登录但不访问login
         next()

@@ -1,5 +1,6 @@
 <script>
 import {DEFAULT_ACCOUNT, SYSTEM_CONFIG} from "~/config"
+import Auth from "~/model/auth";
 
 export default {
     data: function() {
@@ -35,17 +36,28 @@ export default {
         this.loginInfo.password = ''
       },
       loginBtnHandler: function() {
-        if (this.loginInfo.username.toLowerCase() === DEFAULT_ACCOUNT.username && this.loginInfo.password === DEFAULT_ACCOUNT.password) {
-          //登录成功
-          this.$store.commit('login', {userName: this.loginInfo.username, userTicket: 'xxdadwa', userId: 1})
-          this.$router.push({name:SYSTEM_CONFIG.homeRoute})//跳转主页
+        let username = this.loginInfo.username
+        let password = this.loginInfo.password
+        //发起登录请求
+        Auth.login(username, password, (response) => {
+          //执行一系列操作 todo
+          console.log('success login')
+          this.$router.push({name:SYSTEM_CONFIG.HOME_ROUTE})//跳转主页
           this.$message('已成功登录')
-        }else {
-          //登陆失败
+        }, (error) => {
           this.$alert('用户名或密码错误')
-          this.loginInfo.username = ''
-          this.loginInfo.password = ''
-        }
+        })
+        // if (this.loginInfo.username.toLowerCase() === DEFAULT_ACCOUNT.username && this.loginInfo.password === DEFAULT_ACCOUNT.password) {
+        //   //登录成功
+        //   this.$store.commit('login', {userName: this.loginInfo.username, userTicket: 'xxdadwa', userId: 1})
+        //   this.$router.push({name:SYSTEM_CONFIG.homeRoute})//跳转主页
+        //   this.$message('已成功登录')
+        // }else {
+        //   //登陆失败
+        //   this.$alert('用户名或密码错误')
+        //   this.loginInfo.username = ''
+        //   this.loginInfo.password = ''
+        // }
       }
     }
   }

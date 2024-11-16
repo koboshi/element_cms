@@ -1,22 +1,29 @@
 <template>
   <div id="app">
-    <main-view v-if="isAuthenticated"></main-view>
-    <router-view v-else></router-view>
+    <main-view v-if="isLogin()"></main-view>
+    <transparent-view v-else></transparent-view>
   </div>
 </template>
 
 <script>
 import MainView from "./views/layout/MainView.vue"
+import TransparentView from './views/layout/TransparentView.vue'
+import Helper from "~/utils/helper";
 export default {
-  components: {MainView},
+  components: {MainView, TransparentView},
   data: function () {
     return {
       //isAuthenticated: this.$store.state.isAuthenticated,
     }
   },
   computed: {
-    isAuthenticated: function () {
-      return this.$store.state.isAuthenticated
+    // isLogin: function () {
+    //   return Helper.isLogin()
+    // }
+  },
+  methods: {
+    isLogin: function () {
+      return Helper.isLogin()
     }
   }
 }

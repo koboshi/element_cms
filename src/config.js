@@ -1,13 +1,17 @@
 export const SYSTEM_CONFIG = {
     //不需要校验权限的路由
-    noAuthRoute: [
+    NO_AUTH_ROUTE: [
         //'login'
     ],
-    homeRoute: 'home',
+    HOME_ROUTE: 'home',
     //认证入口
-    loginRoute: 'login',
+    LOGIN_ROUTE: 'login',
     //取消认证入口
-    logoutRoute: 'logout',
+    LOGOUT_ROUTE: 'logout',
+
+    API_BASE_URL: 'http://127.0.0.1:8000/index.php',
+
+    COOKIE_PREFIX: 'epc',
 }
 
 //默认登陆账号（mock，用于无后端测试）
