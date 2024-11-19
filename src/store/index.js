@@ -7,7 +7,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         loginInfo: null,
-        isLogin: false
+        isLogin: false,
+        activeTab: 'home'
     },
     getters: {
         loginInfo: (state) => {
@@ -16,21 +17,11 @@ const store = new Vuex.Store({
         isLogin: (state) => {
             return state.isLogin
         }
-        // loginInfo: (state) => {
-        //     let uid = CookieStorage.get('uid', 0)
-        //     let ticket = CookieStorage.get('ticket', '')
-        //     let username = CookieStorage.get('username', '')
-        //     if (uid != 0 && ticket != '') {
-        //         return {
-        //             uid: uid,
-        //             ticket: ticket,
-        //             username: username
-        //         }
-        //     }
-        //     return null
-        // },
     },
     mutations: {
+        setActiveTab: function (state, payload) {
+            state.activeTab = payload.activeTab
+        },
         logout: function(state) {
             state.loginInfo = {}
             state.isLogin = false

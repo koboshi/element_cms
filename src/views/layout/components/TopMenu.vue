@@ -11,13 +11,16 @@ export default {
   },
   computed: {
     menuActiveIndex: function () {
-      return this.$route.name
+      return this.$store.state.activeTab
     },
     loginInfo: function () {
       return Helper.getLoginInfo()
     }
   },
   methods: {
+    menuSelectHandler(key, keyPath) {
+      this.$store.commit('setActiveTab', {activeTab: key})
+    },
     menuItemClickHandle(e) {
       if (this.$route.name !== e.$attrs.route_name) {
         this.$router.push({name:e.$attrs.route_name})
@@ -32,7 +35,6 @@ export default {
         this.$router.push(SYSTEM_CONFIG.LOGIN_ROUTE)
         this.$message('已成功登出')
       }, (err) => {
-        console.log(err)
         this.$message('登出失败，未知错误')
       })
     }
@@ -43,7 +45,7 @@ export default {
 <template>
   <div>
     <!--头部导航begin-->
-    <el-menu mode="horizontal" :default-active="menuActiveIndex">
+    <el-menu mode="horizontal" @select="menuSelectHandler" :default-active="menuActiveIndex">
       <el-menu-item @click="menuItemClickHandle" route_name="home" index="home">处理中心</el-menu-item>
       <el-menu-item @click="menuItemClickHandle" route_name="msg_center" index="msg_center">消息中心</el-menu-item>
       <el-submenu index="3">

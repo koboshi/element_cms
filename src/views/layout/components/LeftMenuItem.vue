@@ -8,7 +8,6 @@ export default {
   },
   methods: {
     menuItemClickHandle(e) {
-      console.log(e.$attrs)
       if (this.$route.name !== e.$attrs.route_name) {
         this.$router.push({name:e.$attrs.route_name})
       }
@@ -21,7 +20,7 @@ export default {
   <div>
     <div v-for="(menu, index) in menus" :key="index">
 
-      <el-submenu v-if="menu.children" :index="menu.id">
+      <el-submenu v-if="menu.children && menu.children.length > 0" :index="menu.route_name">
         <template slot="title">
           <i class="el-icon-menu"></i>
           <span>{{menu.name}}</span>
@@ -32,7 +31,7 @@ export default {
       </el-submenu>
 
       <div v-else>
-        <el-menu-item @click="menuItemClickHandle" :route_name="menu.route_name" :index="menu.id">{{menu.name}}</el-menu-item>
+        <el-menu-item @click="menuItemClickHandle" :route_name="menu.route_name" :index="menu.route_name">{{menu.name}}</el-menu-item>
       </div>
 
     </div>

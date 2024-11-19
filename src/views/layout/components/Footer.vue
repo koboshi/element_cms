@@ -2,7 +2,7 @@
 export default {
   data: function() {
     return {
-      test: 'hello world'
+
     }
   },
   methods: {
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="footer-box">
     <el-divider></el-divider>
 <!--    <el-link :to="{name: 'about'}" type="info">关于</el-link>-->
     <el-link @click.prevent="aboutClickHandle" type="info">关于</el-link>
@@ -30,5 +30,4 @@ export default {
 </template>
 
 <style scoped>
-
 </style>

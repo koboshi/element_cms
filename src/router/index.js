@@ -61,67 +61,6 @@ const routes = [
             component:() => import(/* webpackChunkName: "view-admin" */ '../views/admin/ChangePswView.vue')
         }]
     },
-    {
-        path: '/goods',
-        name: 'goods',
-        meta: {name:'商品'},
-        component: DefaultView,
-        children: [{
-            path: 'list',
-            name: 'goods_list',
-            meta: {name:'商品管理'},
-            component:() => import(/* webpackChunkName: "view-goods" */ '../views/goods/ListView.vue')
-        }]
-    },
-    {
-        path: '/order',
-        name: 'order',
-        meta: {name:'订单'},
-        component: DefaultView,
-        children: [{
-            path: 'order-report',
-            name: 'order_report',
-            meta: {name:'订单列表'},
-            component:() => import(/* webpackChunkName: "view-order" */ '../views/order/ReportView.vue')
-        },{
-            path: 'revenue-report',
-            name: 'revenue_report',
-            meta: {name:'营收报表'},
-            component:() => import(/* webpackChunkName: "view-order" */ '../views/order/RevenueView.vue')
-        },{
-            path: 'list',
-            name: 'order_list',
-            meta: {name:'订单管理'},
-            component:() => import(/* webpackChunkName: "view-order" */ '../views/order/ListView.vue')
-        }]
-    },
-    {
-        path: '/user',
-        name: 'user',
-        meta: {name:'用户'},
-        component: DefaultView,
-        children: [{
-            path: 'list',
-            name: 'user_list',
-            meta: {name:'用户管理'},
-            component:() => import(/* webpackChunkName: "view-user" */ '../views/user/ListView.vue')
-        },{
-            path: 'mau-report',
-            name: 'mau_report',
-            meta: {name:'MAU报表'},
-            component:() => import(/* webpackChunkName: "view-user" */ '../views/user/MauView.vue')
-        },{
-            path: 'dau-report',
-            name: 'dau_report',
-            meta: {name:'DAU报表'},
-            component:() => import(/* webpackChunkName: "view-user" */ '../views/user/DauView.vue')
-        },{
-            path: 'arpu-report',
-            name: 'arpu_report',
-            meta: {name:'ARPU报表'},
-            component:() => import(/* webpackChunkName: "view-user" */ '../views/user/ArpuView.vue')
-        }]
-    }
 ]
 
 const router = new VueRouter({
@@ -132,7 +71,6 @@ const router = new VueRouter({
 //导航守卫设定
 router.beforeEach(function(to, from, next) {
     let flag = Helper.isLogin()
-    console.log(flag)
     if (SYSTEM_CONFIG.NO_AUTH_ROUTE.includes(to.name)) {
         //若目标位置是免认证，则无条件允许
         next()

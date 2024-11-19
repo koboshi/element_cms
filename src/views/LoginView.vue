@@ -40,8 +40,7 @@ export default {
         let password = this.loginInfo.password
         //发起登录请求
         Auth.login(username, password, (response) => {
-          //执行一系列操作 todo
-          console.log('success login')
+          //执行一系列操作
           this.$router.push({name:SYSTEM_CONFIG.HOME_ROUTE})//跳转主页
           this.$message('已成功登录')
         }, (error) => {

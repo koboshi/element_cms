@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <el-container>
+    <el-container class="main-container">
       <el-header>
         <!--头部导航begin-->
         <top-menu></top-menu>
@@ -35,7 +34,6 @@
         </el-container>
       </el-container>
     </el-container>
-  </div>
 </template>
 
 <script>
@@ -54,5 +52,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

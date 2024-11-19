@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main-view v-if="isLogin()"></main-view>
+    <main-view v-if="isLogin"></main-view>
     <transparent-view v-else></transparent-view>
   </div>
 </template>
@@ -17,14 +17,18 @@ export default {
     }
   },
   computed: {
-    // isLogin: function () {
-    //   return Helper.isLogin()
-    // }
-  },
-  methods: {
     isLogin: function () {
       return Helper.isLogin()
     }
+  },
+  // updated: function() {
+  //   console.log('updated trigger')
+  //   this.isLogin= Helper.isLogin()
+  // },
+  methods: {
+    // isLogin: function () {
+    //   return Helper.isLogin()
+    // }
   }
 }
 </script>
