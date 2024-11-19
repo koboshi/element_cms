@@ -9,11 +9,13 @@ export default {
     aboutClickHandle (e) {
       if (this.$route.name !== 'about') {
         this.$router.push({name:'about'})
+        this.$store.commit('setActiveTab', {activeTab: 'about'})
       }
     },
     contactClickHandle (e) {
       if (this.$route.name !== 'contact_us') {
         this.$router.push({name:'contact_us'})
+        this.$store.commit('setActiveTab', {activeTab: 'contact_us'})
       }
     }
   }
