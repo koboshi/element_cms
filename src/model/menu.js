@@ -65,6 +65,23 @@ const Menu = {
             errorCallback && errorCallback(null, error)
         })
     },
+    list: function(menuId, parentId, page, size, successCallback, errorCallback) {
+        Request.post('/menu/list', {
+            menu_id: menuId,
+            parent_id: parentId,
+            page: page,
+            size: size
+        }).then(function(response) {
+            if (response.data.error_code == 0) {
+                successCallback && successCallback(response)
+            }else {
+                errorCallback && errorCallback(response, null)
+            }
+        }).catch(function(error) {
+            console.log(error)
+            errorCallback && errorCallback(null, error)
+        })
+    }
 }
 
 export default Menu
