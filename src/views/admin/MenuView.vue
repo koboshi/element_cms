@@ -1,9 +1,10 @@
 <script>
 import ListPager from "~/components/ListPager.vue"
+import MenuDetailFormDialog from "~/views/admin/MenuDetailFormDialog.vue"
 import Menu from '~/model/menu'
 
 export default {
-  components: {ListPager,},
+  components: {ListPager,MenuDetailFormDialog,},
   data: function() {
     return {
       menusData: null,
@@ -15,6 +16,9 @@ export default {
         menu_id: '',
         parent_id: '',
       },
+      editDialogVisible: false,
+      addDialogVisible: false,
+      editMenuId: 0,
     }
   },
   computed: {
@@ -58,14 +62,26 @@ export default {
       this.searchInfo.parent_id = ''
     },
     addBtnHandler() {
-      //todo
+      this.addDialogVisible = true
     },
     editBtnHandler(menuId) {
-      //todo
+      this.editMenuId = menuId
+      this.editDialogVisible = true
     },
     delBtnHandler(menuId) {
+      console.log('delete menu')
+      console.log(menuId)
+    },
+    addDialogCallback(status, action, menuId, menuInfo) {
       //todo
-    }
+      this.addDialogVisible = false
+      this.loadMenus(this.searchInfo, this.curPage, this.pageSize)
+    },
+    editDialogCallback(status, action, menuId, menuInfo) {
+      //todo
+      this.editDialogVisible = false
+      this.loadMenus(this.searchInfo, this.curPage, this.pageSize)
+    },
   }
 }
 </script>
@@ -112,6 +128,10 @@ export default {
     </el-row>
     <el-row>
       <el-col>
+        <!--数据编辑弹框begin-->
+        <menu-detail-form-dialog :menu-id="0" action="add" :visible.sync="addDialogVisible" :callback="addDialogCallback"></menu-detail-form-dialog>
+        <menu-detail-form-dialog :menu-id="editMenuId" action="edit" :visible.sync="editDialogVisible" :callback="editDialogCallback"></menu-detail-form-dialog>
+        <!--数据编辑弹框end-->
         <div class="data-box">
           <!--数据表格begin-->
           <el-table v-loading="tableDataLoading" border stripe :data="menusData">

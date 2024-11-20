@@ -51,6 +51,32 @@ const _getViewPath = function(routeName) {
 }
 
 const Menu = {
+    info: function(menuId, successCallback, errorCallback){
+        Request.post('/menu/info', {
+            menu_id: menuId
+        }).then(function(response){
+            if (response.data.error_code == 0) {
+                successCallback && successCallback(response)
+            }else {
+                errorCallback && errorCallback(response, null)
+            }
+        }).catch(function(error) {
+            console.log(error)
+            errorCallback && errorCallback(null, error)
+        })
+    },
+    cascader: function(successCallback, errorCallback) {
+        Request.post('/menu/cascader').then(function(response) {
+            if (response.data.error_code == 0) {
+                successCallback && successCallback(response)
+            }else {
+                errorCallback && errorCallback(response, null)
+            }
+        }).catch(function(error) {
+            console.log(error)
+            errorCallback && errorCallback(null, error)
+        })
+    },
     tree: function(successCallback, errorCallback) {
         Request.post('/menu/tree').then(function(response) {
             if (response.data.error_code == 0) {

@@ -225,7 +225,7 @@ export default {
                   <el-cascader
                       v-model="searchInfo.region"
                       :options="regionOptions"
-                      :props="{ expandTrigger: 'hover' }"
+                      :props="{ expandTrigger: 'hover'}"
                       @change="regionChangeHandler"></el-cascader>
                 </el-form-item>
               </el-col>
